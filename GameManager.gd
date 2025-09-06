@@ -46,15 +46,11 @@ func load_level(level_num: int):
 		
 	create_tomfoolery_area(current_level_node.get_fuckable_items())
 		
-func create_tomfoolery_area(fuckable_items: Array[TFuckableItem]):
+func create_tomfoolery_area(fuckable_items: Array[FuckableItem]):
 	var tomfools = TomfooleryArea.new()
-
+	
 	for fuckable_item in fuckable_items:
-		match fuckable_item.name:
-			"tv":
-				var tv = TV.new()
-				tomfools.add_child(tv)
-				tv.position = Vector2(736, 800)
+		tomfools.add_child(fuckable_item)
 				
 	current_level_node.add_child(tomfools)
 

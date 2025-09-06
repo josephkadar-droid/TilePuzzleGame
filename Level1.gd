@@ -5,7 +5,7 @@ func get_init_inventory_items() -> Array[InventoryItem]:
 		InventoryItem.new("angry_flower", 3)
 	]
 	
-func get_fuckable_items() -> Array[TFuckableItem]:
+func get_fuckable_items() -> Array[FuckableItem]:
 	return [
-		TFuckableItem.new("tv", 1)
+		TV.new()
 	]

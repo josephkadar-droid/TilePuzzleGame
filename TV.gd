@@ -12,6 +12,7 @@ var height: int = 80
 # INITIALIZATION - creates the TV sprite when scene loads
 func _ready():
 	print("=== TV _ready() called ===")
+	position = Vector2(736, 920)
 	create_tv_sprite()
 	create_collision_shape()
 

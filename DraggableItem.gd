@@ -31,8 +31,9 @@ func _ready():
 	# Enable input
 	input_pickable = true
 	
-	original_position = position
 	original_parent = get_parent()
+	original_position = original_parent.position
+	print("og pos: ", original_position)
 	print("=== DraggableItem setup complete ===")
 
 func create_item_texture() -> ImageTexture:

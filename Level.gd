@@ -89,5 +89,5 @@ func get_init_inventory_items() -> Array[InventoryItem]:
 	# Override in specific levels
 	return []
 
-func get_fuckable_items() -> Array[TFuckableItem]:
+func get_fuckable_items() -> Array[FuckableItem]:
 	return []
