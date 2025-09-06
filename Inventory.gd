@@ -11,9 +11,9 @@ func _ready():
 func setup_item_scenes():
 	pass
 
-func setup_for_level(required_items: Dictionary):
+func setup_for_level(init_inventory: Array[InventoryItem]):
 	print("=== SETTING UP INVENTORY FOR LEVEL ===")
-	print("Required items: ", required_items)
+	print("Initial inventory items: ", init_inventory)
 	
 	# Clear existing items
 	for child in get_children():
@@ -23,10 +23,10 @@ func setup_for_level(required_items: Dictionary):
 	
 	# Create item containers
 	var y_offset = 0
-	for item_type in required_items.keys():
-		var quantity = required_items[item_type]
-		print("Creating ", quantity, " items of type: ", item_type)
-		create_item_container(item_type, quantity, y_offset)
+	for item in init_inventory:
+		var quantity = item.quantity
+		print("Creating ", quantity, " items of type: ", item.name)
+		create_item_container(item.name, quantity, y_offset)
 		y_offset += 70
 
 func create_item_container(item_type: String, quantity: int, y_pos: int):

@@ -9,8 +9,10 @@ signal level_completed
 @export var show_debug_grid: bool = false
 
 var grid_data: Array = []
-var placeable_objects: Array[PlaceableObject] = []
+#var placeable_objects: Array[Shelf] = []
+var shelf: Shelf = null
 var placement_spots: Array[PlacementSpot] = []
+var fuckable_items: Array[FuckableItem] = []
 
 func _ready():
 	initialize_grid()
@@ -23,6 +25,7 @@ func _ready():
 	# Connect placement spot signals
 	for spot in placement_spots:
 		spot.item_placed.connect(_on_item_placed)
+	
 
 func initialize_grid():
 	grid_data.clear()
@@ -53,10 +56,12 @@ func draw_debug_grid():
 		grid_node.add_child(line)
 
 func find_objects_recursive(node: Node):
-	if node is PlaceableObject:
-		placeable_objects.append(node)
+	if node is Shelf:
+		shelf = node
 	elif node is PlacementSpot:
 		placement_spots.append(node)
+	elif node is FuckableItem:
+		fuckable_items.append(node)
 	
 	for child in node.get_children():
 		find_objects_recursive(child)
@@ -72,17 +77,17 @@ func _on_item_placed():
 
 func check_completion():
 	# Check if all objects are satisfied
-	for obj in placeable_objects:
-		if not obj.is_satisfied():
-			return
-	
-	# All objects satisfied - trigger effects and complete level
-	for obj in placeable_objects:
-		obj.trigger_completion_effect()
+	if not shelf.is_satisfied():
+		return
+
+	shelf.trigger_completion_effect()
 	
 	await get_tree().create_timer(1.5).timeout  # Wait for animations
 	level_completed.emit()
 
-func get_required_items() -> Dictionary:
+func get_init_inventory_items() -> Array[InventoryItem]:
 	# Override in specific levels
-	return {}
+	return []
+
+func get_fuckable_items() -> Array[TFuckableItem]:
+	return []

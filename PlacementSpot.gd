@@ -8,7 +8,7 @@ signal item_placed
 @export var invalid_color: Color = Color.RED
 
 var filled_item: DraggableItem = null
-var parent_object: PlaceableObject = null
+var parent_object: Shelf = null
 var highlight_sprite: Sprite2D
 var is_highlighted: bool = false
 

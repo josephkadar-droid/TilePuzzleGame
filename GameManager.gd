@@ -34,7 +34,7 @@ func load_level(level_num: int):
 		current_level_node.level_completed.connect(_on_level_completed)
 		
 		print("Level loaded. Getting required items...")
-		var required_items = current_level_node.get_required_items()
+		var required_items = current_level_node.get_init_inventory_items()
 		print("Required items: ", required_items)
 		
 		# Setup inventory for this level
@@ -43,6 +43,20 @@ func load_level(level_num: int):
 		print("Inventory setup complete")
 	else:
 		print("ERROR: Could not load level ", level_num)
+		
+	create_tomfoolery_area(current_level_node.get_fuckable_items())
+		
+func create_tomfoolery_area(fuckable_items: Array[TFuckableItem]):
+	var tomfools = TomfooleryArea.new()
+
+	for fuckable_item in fuckable_items:
+		match fuckable_item.name:
+			"tv":
+				var tv = TV.new()
+				tomfools.add_child(tv)
+				tv.position = Vector2(736, 800)
+				
+	current_level_node.add_child(tomfools)
 
 func _on_level_completed():
 	print("Level ", current_level, " completed!")
