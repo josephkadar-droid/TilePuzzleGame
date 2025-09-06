@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://da2b1tc06oduy"]
+
+[ext_resource type="Script" uid="uid://dvxw6vme2xpd2" path="res://GameManager.gd" id="1_p13vs"]
+[ext_resource type="PackedScene" uid="uid://cb5ainjtcd1aa" path="res://Level1.tscn" id="2_108xg"]
+[ext_resource type="Script" uid="uid://rt0no1ompx7a" path="res://Inventory.gd" id="2_aelf4"]
+[ext_resource type="PackedScene" uid="uid://kbt7k4quqfs3" path="res://Level2.tscn" id="3_dxunw"]
+
+[node name="GameManager" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_p13vs")
+level_scenes = Array[PackedScene]([ExtResource("2_108xg"), ExtResource("3_dxunw")])
+metadata/_edit_use_anchors_ = true
+
+[node name="LevelContainer" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+metadata/_edit_use_anchors_ = true
+
+[node name="UIContainer" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Inventory" type="Control" parent="UIContainer"]
+anchors_preset = 0
+offset_left = 1520.0
+offset_top = 880.0
+offset_right = 1920.0
+offset_bottom = 1080.0
+script = ExtResource("2_aelf4")
+metadata/_edit_use_anchors_ = true

@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bpafj1eqb5xo7"]
+
+[ext_resource type="Script" uid="uid://d2x0qcbou6di8" path="res://DraggableItem.gd" id="1_o0pxo"]
+
+[node name="DraggableItem" type="Area2D"]
+script = ExtResource("1_o0pxo")
