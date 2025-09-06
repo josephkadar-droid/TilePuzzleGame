@@ -1,14 +1,11 @@
-extends Area2D
+extends ShelfSpot
 class_name PlacementSpot
-
-signal item_placed
 
 @export var accepted_item_types: Array[String] = ["any"]
 @export var highlight_color: Color = Color.GREEN
 @export var invalid_color: Color = Color.RED
 
 var filled_item: DraggableItem = null
-var parent_object: Shelf = null
 var highlight_sprite: Sprite2D
 var is_highlighted: bool = false
 
@@ -86,6 +83,7 @@ func place_item(item: DraggableItem) -> bool:
 	print("Placing item successfully")
 	filled_item = item
 	item.place_at_spot(self)
+	is_placed = true
 	item_placed.emit()
 	hide_highlight()
 	return true

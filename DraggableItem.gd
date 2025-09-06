@@ -37,6 +37,7 @@ func _ready():
 	print("=== DraggableItem setup complete ===")
 
 func create_item_texture() -> ImageTexture:
+	print("create txtre")
 	if item_type == "angry_flower":
 		return create_angry_flower_texture()
 	else:

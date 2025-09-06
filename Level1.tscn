@@ -12,6 +12,9 @@ script = ExtResource("1_mc20k")
 
 [node name="Shelf" type="Area2D" parent="."]
 script = ExtResource("2_cove1")
+position_effects = {
+1: "sun"
+}
 
 [node name="ColorRect" type="ColorRect" parent="Shelf"]
 modulate = Color(0.583002, 0.358384, 0.189896, 1)

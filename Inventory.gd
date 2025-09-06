@@ -11,7 +11,7 @@ func _ready():
 func setup_item_scenes():
 	pass
 
-func setup_for_level(init_inventory: Array[InventoryItem]):
+func setup_for_level(level_num: int, init_inventory: Array[InventoryItem]):
 	print("=== SETTING UP INVENTORY FOR LEVEL ===")
 	print("Initial inventory items: ", init_inventory)
 	
@@ -26,10 +26,10 @@ func setup_for_level(init_inventory: Array[InventoryItem]):
 	for item in init_inventory:
 		var quantity = item.quantity
 		print("Creating ", quantity, " items of type: ", item.name)
-		create_item_container(item.name, quantity, y_offset)
+		create_item_container(level_num, item.name, quantity, y_offset)
 		y_offset += 70
 
-func create_item_container(item_type: String, quantity: int, y_pos: int):
+func create_item_container(level_num: int, item_type: String, quantity: int, y_pos: int):
 	print("=== CREATING ITEM CONTAINER ===")
 	print("Item type: ", item_type, " Quantity: ", quantity, " Y position: ", y_pos)
 	
@@ -54,7 +54,8 @@ func create_item_container(item_type: String, quantity: int, y_pos: int):
 		# Get the level container to add 2D items
 		var level_container = get_node("../../LevelContainer")
 		if level_container.get_child_count() > 0:
-			var level = level_container.get_child(0)
+			var level = level_container.get_child(level_num-1)
+			print("level tile size: ",level.tile_size)
 			level.add_child(item)
 			
 			# Position items more visibly (center-right area)

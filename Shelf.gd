@@ -7,9 +7,13 @@ class_name Shelf  # Defines this as a custom class type
 # EXPORTED VARIABLES - appear in editor inspector (like [SerializeField] in Unity)
 @export var object_name: String = "Object"  # Name identifier for this object
 @export var completion_effect: String = "fall"  # Effect type: "fall", "disappear", etc.
+@export var max_weight: int = 3
 
 # PRIVATE VARIABLES - internal state management
-var placement_spots: Array[PlacementSpot] = []  # List of spots where items can be placed
+var placement_spots: Array[ShelfSpot] = []  # List of spots where items can be placed
+var current_weight: int = 0
+
+@export var position_effects: Dictionary = {}
 
 # INITIALIZATION - called when object enters scene (like Start() in Unity)
 func _ready():
@@ -23,6 +27,8 @@ func _ready():
 	print("Found ", placement_spots.size(), " placement spots")
 	for i in range(placement_spots.size()):
 		print("Spot ", i+1, ": ", placement_spots[i].name)
+		
+	print("current weight: ", current_weight)
 
 func _process(delta: float) -> void:
 	FuckTheItems()
@@ -37,12 +43,15 @@ func FuckTheItems():
 # RECURSIVE FINDER - searches through all child nodes to find PlacementSpots
 func find_placement_spots_recursive(node: Node):
 	# TYPE CHECK - if this node is a PlacementSpot, add it to our list
-	if node is PlacementSpot:
-		print("Found PlacementSpot: ", node.name)
+	var pos_count = 1
+	if node is ShelfSpot:
+		print("Found ShelfSpot: ", node.name)
 		placement_spots.append(node)  # Add to our array (like List.Add() in C#)
 		node.parent_object = self  # Set back-reference so spot knows its parent
 		# EVENT SUBSCRIPTION - listen for item placement events (like += in C#)
 		node.item_placed.connect(_on_item_placed)
+		node.spot_position = pos_count
+		pos_count += 1
 	
 	# RECURSION - check all children of this node
 	for child in node.get_children():
@@ -53,16 +62,18 @@ func _on_item_placed():
 	print("=== ITEM PLACED - CHECKING COMPLETION ===")
 	print("Total spots: ", placement_spots.size())
 	var filled_spots = 0  # Counter for filled spots
+	var weight = 0  # Counter for filled spots
 	
 	# VALIDATION LOOP - check each spot to see if it's filled
 	for spot in placement_spots:
-		if spot.is_filled():
+		if spot.is_placed:
+			apply_special_effect(spot)
 			filled_spots += 1
-			print("Spot ", spot.name, " is filled")
-		else:
-			print("Spot ", spot.name, " is empty")
+			weight += spot.weight
 	
 	print("Filled spots: ", filled_spots, " / ", placement_spots.size())
+	print("current weight: ", weight)
+	current_weight = weight
 	
 	# COMPLETION CHECK - trigger effect if all spots are filled
 	if is_satisfied():
@@ -71,13 +82,20 @@ func _on_item_placed():
 	else:
 		print("Not all spots filled yet - waiting for more items")
 
+func apply_special_effect(spot: ShelfSpot):
+	print("special effect")
+	if position_effects.has(spot.spot_position):
+		print("effect match")
+		match position_effects[spot.spot_position]:
+			"sun":
+				spot.weight = 2
+			"fire":
+				spot.weight = 0
+
 # COMPLETION VALIDATOR - checks if all placement spots are filled
 func is_satisfied() -> bool:
 	# VALIDATION LOOP - return false if any spot is empty
-	for spot in placement_spots:
-		if not spot.is_filled():
-			return false  # Early exit if any spot is empty
-	return true  # All spots are filled
+	return current_weight >= max_weight
 
 # EFFECT DISPATCHER - triggers the appropriate completion effect
 func trigger_completion_effect():
