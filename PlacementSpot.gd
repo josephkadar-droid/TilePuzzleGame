@@ -41,22 +41,22 @@ func create_highlight_texture() -> ImageTexture:
 func _on_area_entered(area: Area2D):
 	if area.get_parent() is DraggableItem:
 		var item = area.get_parent() as DraggableItem
-		if item.is_being_dragged and can_accept_item(item):
-			show_highlight(true)
-		else:
-			show_highlight(false, true)
+		if item.is_being_dragged:
+			if can_accept_item(item):
+				show_highlight()
+			else:
+				show_highlight(false)
 
-func _on_area_exited(area: Area2D):
-	if area.get_parent() is DraggableItem:
-		hide_highlight()
+func _on_area_exited(_area: Area2D):
+	hide_highlight()
 
-func show_highlight(valid: bool = true, invalid: bool = false):
+func show_highlight(valid: bool = true):
 	is_highlighted = true
 	var tween = create_tween()
-	if invalid:
-		highlight_sprite.modulate = invalid_color
-	else:
+	if valid:
 		highlight_sprite.modulate = highlight_color
+	else:
+		highlight_sprite.modulate = invalid_color
 	tween.tween_property(highlight_sprite, "modulate:a", 0.5, 0.2)
 
 func hide_highlight():
@@ -65,18 +65,25 @@ func hide_highlight():
 	tween.tween_property(highlight_sprite, "modulate:a", 0.0, 0.2)
 
 func can_accept_item(item: DraggableItem) -> bool:
+	# Check if spot is already filled
 	if filled_item != null:
+		print("PlacementSpot already filled with: ", filled_item.item_type)
 		return false
 	
+	# Check if item type is accepted
 	if "any" in accepted_item_types:
 		return true
 	
 	return item.item_type in accepted_item_types
 
 func place_item(item: DraggableItem) -> bool:
+	print("Attempting to place ", item.item_type, " in PlacementSpot")
+	
 	if not can_accept_item(item):
+		print("Cannot accept item")
 		return false
 	
+	print("Placing item successfully")
 	filled_item = item
 	item.place_at_spot(self)
 	item_placed.emit()
@@ -88,4 +95,5 @@ func is_filled() -> bool:
 
 func remove_item():
 	if filled_item:
+		print("Removing item from PlacementSpot")
 		filled_item = null

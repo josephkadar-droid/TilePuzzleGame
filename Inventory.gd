@@ -39,8 +39,8 @@ func create_item_container(item_type: String, quantity: int, y_pos: int):
 	
 	# Label
 	var label = Label.new()
-	label.text = item_type + ": "
-	label.custom_minimum_size.x = 100
+	label.text = item_type.replace("_", " ").capitalize() + ": "
+	label.custom_minimum_size.x = 150
 	container.add_child(label)
 	
 	# Items
@@ -72,14 +72,10 @@ func create_draggable_item(item_type: String) -> DraggableItem:
 	var item = preload("res://DraggableItem.tscn").instantiate()
 	item.item_type = item_type
 	
-	# Set color based on type
+	# Set color and appearance based on type
 	match item_type:
-		"apple":
-			item.item_color = Color.RED
-		"banana":
-			item.item_color = Color.YELLOW
-		"orange":
-			item.item_color = Color.ORANGE
+		"angry_flower":
+			item.item_color = Color(0.8, 0.2, 0.2)  # Dark red/angry color
 		_:
 			item.item_color = Color.WHITE
 	
