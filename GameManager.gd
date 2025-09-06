@@ -11,21 +11,38 @@ class_name GameManager
 var current_level_node: Level
 
 func _ready():
+	print("=== GAMEMANAGER _ready() called ===")
+	print("Level container: ", level_container)
+	print("UI container: ", ui_container)
+	print("Inventory: ", inventory)
 	load_level(current_level)
 
 func load_level(level_num: int):
+	print("=== LOADING LEVEL ===")
+	print("Level number: ", level_num)
+	print("Available level scenes: ", level_scenes.size())
+	
 	# Clear existing level
 	if current_level_node:
 		current_level_node.queue_free()
 	
 	# Load new level
 	if level_num <= level_scenes.size() and level_scenes[level_num - 1]:
+		print("Loading level scene: ", level_scenes[level_num - 1])
 		current_level_node = level_scenes[level_num - 1].instantiate()
 		level_container.add_child(current_level_node)
 		current_level_node.level_completed.connect(_on_level_completed)
 		
+		print("Level loaded. Getting required items...")
+		var required_items = current_level_node.get_required_items()
+		print("Required items: ", required_items)
+		
 		# Setup inventory for this level
-		inventory.setup_for_level(current_level_node.get_required_items())
+		print("Setting up inventory...")
+		inventory.setup_for_level(required_items)
+		print("Inventory setup complete")
+	else:
+		print("ERROR: Could not load level ", level_num)
 
 func _on_level_completed():
 	print("Level ", current_level, " completed!")

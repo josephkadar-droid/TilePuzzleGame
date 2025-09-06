@@ -5,14 +5,16 @@ var item_scenes: Dictionary = {}
 var item_containers: Dictionary = {}
 
 func _ready():
+	print("=== INVENTORY _ready() called ===")
 	setup_item_scenes()
 
 func setup_item_scenes():
-	# You'll assign these in the editor or load them
-	# For now, we'll create them programmatically
 	pass
 
 func setup_for_level(required_items: Dictionary):
+	print("=== SETTING UP INVENTORY FOR LEVEL ===")
+	print("Required items: ", required_items)
+	
 	# Clear existing items
 	for child in get_children():
 		child.queue_free()
@@ -23,10 +25,14 @@ func setup_for_level(required_items: Dictionary):
 	var y_offset = 0
 	for item_type in required_items.keys():
 		var quantity = required_items[item_type]
+		print("Creating ", quantity, " items of type: ", item_type)
 		create_item_container(item_type, quantity, y_offset)
 		y_offset += 70
 
 func create_item_container(item_type: String, quantity: int, y_pos: int):
+	print("=== CREATING ITEM CONTAINER ===")
+	print("Item type: ", item_type, " Quantity: ", quantity, " Y position: ", y_pos)
+	
 	var container = HBoxContainer.new()
 	container.position = Vector2(10, y_pos)
 	add_child(container)
@@ -42,12 +48,27 @@ func create_item_container(item_type: String, quantity: int, y_pos: int):
 	container.add_child(items_container)
 	
 	for i in range(quantity):
+		print("Creating draggable item #", i+1)
 		var item = create_draggable_item(item_type)
-		items_container.add_child(item)
+		
+		# Get the level container to add 2D items
+		var level_container = get_node("../../LevelContainer")
+		if level_container.get_child_count() > 0:
+			var level = level_container.get_child(0)
+			level.add_child(item)
+			
+			# Position items more visibly (center-right area)
+			item.position = Vector2(1200 + (i * 80), 200 + y_pos)
+			print("Item positioned at: ", item.position)
+		else:
+			print("ERROR: No level found in LevelContainer")
 	
 	item_containers[item_type] = items_container
 
 func create_draggable_item(item_type: String) -> DraggableItem:
+	print("=== CREATING DRAGGABLE ITEM ===")
+	print("Loading DraggableItem.tscn for type: ", item_type)
+	
 	var item = preload("res://DraggableItem.tscn").instantiate()
 	item.item_type = item_type
 	
@@ -62,4 +83,5 @@ func create_draggable_item(item_type: String) -> DraggableItem:
 		_:
 			item.item_color = Color.WHITE
 	
+	print("Created item with type: ", item.item_type, " and color: ", item.item_color)
 	return item

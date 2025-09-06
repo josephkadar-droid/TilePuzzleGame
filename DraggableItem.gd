@@ -12,6 +12,9 @@ var current_placement_spot: PlacementSpot = null
 var sprite: Sprite2D
 
 func _ready():
+	print("=== DraggableItem _ready() called ===")
+	print("Item type: ", item_type)
+	
 	# Create sprite
 	sprite = Sprite2D.new()
 	sprite.texture = create_item_texture()
@@ -20,15 +23,16 @@ func _ready():
 	# Set up collision
 	var collision = CollisionShape2D.new()
 	var shape = RectangleShape2D.new()
-	shape.size = Vector2(50, 50)
+	shape.size = Vector2(60, 60)
 	collision.shape = shape
 	add_child(collision)
 	
-	# Connect signals
-	input_event.connect(_on_input_event)
+	# Enable input
+	input_pickable = true
 	
 	original_position = position
 	original_parent = get_parent()
+	print("=== DraggableItem setup complete ===")
 
 func create_item_texture() -> ImageTexture:
 	var image = Image.create(60, 60, false, Image.FORMAT_RGB8)
@@ -44,32 +48,33 @@ func create_item_texture() -> ImageTexture:
 	texture.set_image(image)
 	return texture
 
-func _on_input_event(_viewport, event, _shape_idx):
-	if event is InputEventMouseButton:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			if event.pressed:
-				start_drag()
-			else:
-				end_drag()
+func _input(event):
+	if Input.is_action_just_pressed("click"):
+		var mouse_pos = get_global_mouse_position()
+		var bounds = Rect2(global_position - Vector2(30, 30), Vector2(60, 60))
+		
+		if bounds.has_point(mouse_pos):
+			print("=== CLICKED ON ITEM ===")
+			start_drag()
+	
+	elif Input.is_action_just_released("click") and is_being_dragged:
+		print("=== RELEASED CLICK ===")
+		end_drag()
 
 func start_drag():
-	if current_placement_spot:
-		# Remove from current spot
-		current_placement_spot.remove_item()
-		current_placement_spot = null
-	
+	print("=== START_DRAG CALLED ===")
 	is_being_dragged = true
-	z_index = 100  # Bring to front
+	z_index = 100
 	var tween = create_tween()
 	tween.tween_property(sprite, "scale", Vector2(1.1, 1.1), 0.1)
 
 func end_drag():
+	print("=== END_DRAG CALLED ===")
 	is_being_dragged = false
 	z_index = 0
 	var tween = create_tween()
 	tween.tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.1)
 	
-	# Try to place in a spot
 	var placement_successful = false
 	var overlapping_areas = get_overlapping_areas()
 	
