@@ -84,7 +84,7 @@ func check_completion():
 
 	shelf.trigger_completion_effect()
 	
-	await get_tree().create_timer(1.5).timeout  # Wait for animations
+	await get_tree().create_timer(2).timeout  # Wait for animations
 	level_completed.emit()
 
 func get_init_inventory_items() -> Array[InventoryItem]:

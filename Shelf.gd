@@ -13,6 +13,8 @@ class_name Shelf  # Defines this as a custom class type
 var placement_spots: Array[ShelfSpot] = []  # List of spots where items can be placed
 var current_weight: int = 0
 
+var has_effects: bool = false
+
 @export var position_effects: Dictionary = {}
 
 # INITIALIZATION - called when object enters scene (like Start() in Unity)
@@ -69,7 +71,8 @@ func _on_item_placed():
 	# VALIDATION LOOP - check each spot to see if it's filled
 	for spot in placement_spots:
 		if spot.is_placed:
-			apply_special_effect(spot)
+			if spot is PlacementSpot:
+				apply_special_effect(spot)
 			filled_spots += 1
 			weight += spot.weight
 	
@@ -84,15 +87,19 @@ func _on_item_placed():
 	else:
 		print("Not all spots filled yet - waiting for more items")
 
-func apply_special_effect(spot: ShelfSpot):
+func apply_special_effect(spot: PlacementSpot):
 	print("special effect")
 	if position_effects.has(spot.spot_position):
 		print("effect match")
 		match position_effects[spot.spot_position]:
 			"sun":
 				print("sun effect: ", spot.spot_position)
+				spot.filled_item.grow_plant()
+				has_effects = true
+				#await get_tree().create_timer(0.2).timeout
 				spot.weight = 2
 			"fire":
+				has_effects = true
 				spot.weight = 0
 
 # COMPLETION VALIDATOR - checks if all placement spots are filled
@@ -117,8 +124,14 @@ func fall_animation():
 	var level = get_parent()  # Get parent level node (like transform.parent in Unity)
 	var tv_node = level.get_node_or_null("TV")  # Search for TV node by name
 	
+	var timeout: float = 0.4
+	if has_effects:
+		timeout = 2
+	await get_tree().create_timer(timeout).timeout
+	
 	# ANIMATION SETUP - create falling motion (like DOTween in Unity)
 	var tween = create_tween()  # Create animation controller
+	
 	# TWEEN ANIMATION - animate position downward over 1 second
 	tween.tween_property(self, "position", position + Vector2(0, 1000), 1.0)
 	

@@ -10,5 +10,5 @@ func get_init_inventory_items() -> Array[InventoryItem]:
 	
 func get_fuckable_items() -> Array[FuckableItem]:
 	return [
-		TV.new()
+		
 	]

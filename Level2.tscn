@@ -1,73 +1,143 @@
-[gd_scene load_steps=11 format=3 uid="uid://kbt7k4quqfs3"]
+[gd_scene load_steps=18 format=3 uid="uid://kbt7k4quqfs3"]
 
 [ext_resource type="Script" uid="uid://duint7ewm87cm" path="res://Level2.gd" id="1_8mrap"]
 [ext_resource type="Script" uid="uid://bjius2py8qiex" path="res://Shelf.gd" id="2_s8dg4"]
 [ext_resource type="Script" uid="uid://byarea8hlfbhs" path="res://PlacementSpot.gd" id="3_ex07k"]
 [ext_resource type="Script" uid="uid://qh7v7epv0emi" path="res://InanimateObject.gd" id="3_psxy2"]
 [ext_resource type="Texture2D" uid="uid://cqufn4fi78f8l" path="res://bookstack.png" id="4_wwdpc"]
+[ext_resource type="Texture2D" uid="uid://brjgx45fooo0u" path="res://assets/background.png" id="5_00xh1"]
 [ext_resource type="Script" uid="uid://c04dcrh5437mw" path="res://Homelab.gd" id="6_6faey"]
+[ext_resource type="Texture2D" uid="uid://dpobkmbkhn2l5" path="res://assets/inventory-layer.png" id="6_8tfmj"]
 [ext_resource type="Texture2D" uid="uid://tn8xnfq1amla" path="res://assets/homelab.png" id="7_nc7oo"]
 [ext_resource type="Texture2D" uid="uid://28ht2f4s6ru" path="res://assets/homelab_broken.png" id="8_nc7oo"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_psxy2"]
-size = Vector2(192, 64)
+[ext_resource type="Texture2D" uid="uid://du2bsom47iapk" path="res://assets/shelf.png" id="11_jw1dd"]
+[ext_resource type="Texture2D" uid="uid://ddw3jomkgul8y" path="res://assets/placeholder.png" id="12_0xt02"]
+[ext_resource type="Script" uid="uid://d2x0qcbou6di8" path="res://DraggableItem.gd" id="13_q0xi3"]
+[ext_resource type="Texture2D" uid="uid://t20k7qhdgclv" path="res://assets/flower1.png" id="14_nwnlh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6x3wt"]
-size = Vector2(0.467463, 0.288901)
+size = Vector2(1.06873, 0.661951)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e3avg"]
+size = Vector2(594, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0rx21"]
+size = Vector2(126, 155)
 
 [node name="Level2" type="Node2D"]
 script = ExtResource("1_8mrap")
 
-[node name="Shelf" type="Area2D" parent="."]
-script = ExtResource("2_s8dg4")
-
-[node name="ColorRect" type="ColorRect" parent="Shelf"]
-modulate = Color(0.583002, 0.358384, 0.189896, 1)
-offset_left = 640.0
-offset_top = 640.0
-offset_right = 832.0
-offset_bottom = 704.0
-
-[node name="BookStack" type="Area2D" parent="Shelf"]
-script = ExtResource("3_psxy2")
-metadata/_custom_type_script = "uid://qh7v7epv0emi"
-
-[node name="Sprite2D" type="Sprite2D" parent="Shelf/BookStack"]
-position = Vector2(669, 580)
-scale = Vector2(0.0712162, 0.0627551)
-texture = ExtResource("4_wwdpc")
-
-[node name="PlacementSpot2" type="Area2D" parent="Shelf"]
-position = Vector2(734, 576)
-script = ExtResource("3_ex07k")
-
-[node name="PlacementSpot3" type="Area2D" parent="Shelf"]
-position = Vector2(798, 576)
-script = ExtResource("3_ex07k")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Shelf"]
-position = Vector2(736, 672)
-shape = SubResource("RectangleShape2D_psxy2")
-debug_color = Color(0.0431373, 0.596078, 0.721569, 0.278431)
-
 [node name="Homelab" type="Area2D" parent="."]
+z_index = 2
 position = Vector2(732, 880)
 script = ExtResource("6_6faey")
 metadata/_custom_type_script = "uid://c04dcrh5437mw"
 metadata/_edit_group_ = true
 
 [node name="MainSprite" type="Sprite2D" parent="Homelab"]
-position = Vector2(0.999939, 1.52588e-05)
-scale = Vector2(0.193412, 0.193412)
+position = Vector2(-120.111, -74.375)
+scale = Vector2(0.444679, 0.444679)
 texture = ExtResource("7_nc7oo")
 
 [node name="BrokenSprite" type="Sprite2D" parent="Homelab"]
 visible = false
-position = Vector2(0.540062, 6.25002)
-scale = Vector2(0.196154, 0.196154)
+position = Vector2(-118.96, -75)
+scale = Vector2(0.446154, 0.446154)
 texture = ExtResource("8_nc7oo")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Homelab"]
+position = Vector2(-120.254, -74.6099)
 scale = Vector2(400, 400)
 shape = SubResource("RectangleShape2D_6x3wt")
 debug_color = Color(0.873197, 0.251368, 0.6065, 0.42)
+
+[node name="Background" type="Sprite2D" parent="."]
+z_as_relative = false
+position = Vector2(960, 541)
+texture = ExtResource("5_00xh1")
+
+[node name="InventoryBox" type="Sprite2D" parent="."]
+position = Vector2(956, 537)
+texture = ExtResource("6_8tfmj")
+
+[node name="Shelf" type="Area2D" parent="."]
+script = ExtResource("2_s8dg4")
+position_effects = {
+1: "no"
+}
+
+[node name="BookStack" type="Area2D" parent="Shelf"]
+script = ExtResource("3_psxy2")
+metadata/_custom_type_script = "uid://qh7v7epv0emi"
+
+[node name="Sprite2D" type="Sprite2D" parent="Shelf/BookStack"]
+z_index = 1
+position = Vector2(400, 365)
+scale = Vector2(0.206453, 0.181924)
+texture = ExtResource("4_wwdpc")
+
+[node name="PlacementSpot2" type="Area2D" parent="Shelf"]
+position = Vector2(550, 329)
+script = ExtResource("3_ex07k")
+
+[node name="PlacementSpot3" type="Area2D" parent="Shelf"]
+position = Vector2(743, 328)
+script = ExtResource("3_ex07k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shelf"]
+position = Vector2(593, 491)
+shape = SubResource("RectangleShape2D_e3avg")
+debug_color = Color(0.0431373, 0.596078, 0.721569, 0.278431)
+
+[node name="Sprite2D" type="Sprite2D" parent="Shelf"]
+position = Vector2(586, 477)
+scale = Vector2(0.696289, 0.696289)
+texture = ExtResource("11_jw1dd")
+
+[node name="Plc1" type="Sprite2D" parent="Shelf"]
+position = Vector2(400, 444)
+texture = ExtResource("12_0xt02")
+
+[node name="Plc2" type="Sprite2D" parent="Shelf"]
+position = Vector2(592, 442)
+texture = ExtResource("12_0xt02")
+
+[node name="Plc3" type="Sprite2D" parent="Shelf"]
+position = Vector2(782, 442)
+texture = ExtResource("12_0xt02")
+
+[node name="Flower1" type="Area2D" parent="Shelf"]
+position = Vector2(1211, 934)
+script = ExtResource("13_q0xi3")
+item_color = Color(1, 1, 0, 0)
+metadata/_custom_type_script = "uid://d2x0qcbou6di8"
+metadata/_edit_group_ = true
+
+[node name="MainSprite" type="Sprite2D" parent="Shelf/Flower1"]
+position = Vector2(39.5, 40.5)
+scale = Vector2(0.161133, 0.161133)
+texture = ExtResource("14_nwnlh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shelf/Flower1"]
+position = Vector2(44, 44.5)
+shape = SubResource("RectangleShape2D_0rx21")
+
+[node name="Flower2" type="Area2D" parent="Shelf"]
+position = Vector2(1399, 937)
+script = ExtResource("13_q0xi3")
+item_color = Color(1, 1, 0, 0)
+metadata/_custom_type_script = "uid://d2x0qcbou6di8"
+metadata/_edit_group_ = true
+
+[node name="MainSprite" type="Sprite2D" parent="Shelf/Flower2"]
+position = Vector2(39.5, 40.5)
+scale = Vector2(0.161133, 0.161133)
+texture = ExtResource("14_nwnlh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shelf/Flower2"]
+position = Vector2(44.5, 43)
+shape = SubResource("RectangleShape2D_0rx21")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(329, 376.25)
+scale = Vector2(1.22656, 153.5)

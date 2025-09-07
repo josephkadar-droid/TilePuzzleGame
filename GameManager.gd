@@ -1,7 +1,7 @@
 extends Control
 class_name GameManager
 
-@export var current_level: int = 1
+@export var current_level: int = 3
 @export var level_scenes: Array[PackedScene] = []
 
 @onready var level_container = $LevelContainer
@@ -39,10 +39,6 @@ func load_level(level_num: int):
 		var required_items = current_level_node.get_init_inventory_items()
 		print("Required items: ", required_items)
 		
-		# Setup inventory for this level
-		print("Setting up inventory...")
-		inventory.setup_for_level(required_items)
-		print("Inventory setup complete")
 	else:
 		print("ERROR: Could not load level ", level_num)
 		
@@ -72,6 +68,32 @@ func create_completion_popup():
 	completion_popup.title = "Level Complete!"
 	completion_popup.dialog_text = current_level_node.completion_msg  # <-- HERE
 	completion_popup.get_ok_button().text = "Next Level"
+	
+	# Increase dialog size
+	completion_popup.size = Vector2(600, 300)  # Make the dialog bigger
+
+	# Create a new theme
+	var custom_theme = Theme.new()
+
+	# Set default font size for all controls
+	custom_theme.default_font_size = 30
+	
+	# Apply theme to the dialog
+	completion_popup.theme = custom_theme
+
+	# Make button bigger
+	var ok_button = completion_popup.get_ok_button()
+	ok_button.add_theme_font_size_override("font_size", 24)  # Larger button text
+	ok_button.custom_minimum_size = Vector2(120, 60)  # Bigger button size
+	ok_button.text = "Next Level"
+
+	# Optional: Add some margin to text for better spacing
+	var text_label = completion_popup.get_label()
+	text_label.add_theme_constant_override("margin_left", 40) 
+	text_label.add_theme_constant_override("margin_top", 40) 
+	text_label.add_theme_constant_override("margin_right", 40)
+	text_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	
 	add_child(completion_popup)
 	completion_popup.confirmed.connect(on_next_level_pressed)
 
@@ -87,6 +109,31 @@ func show_game_complete_popup():  # <-- Function definition here
 	final_popup.title = "Game Complete!"
 	final_popup.dialog_text = "Congratulations! You've completed all levels!"
 	final_popup.get_ok_button().text = "Play Again"
+	
+	# Increase dialog size
+	final_popup.size = Vector2(600, 300)  # Make the dialog bigger
+
+	# Create a new theme
+	var custom_theme = Theme.new()
+
+	# Set default font size for all controls
+	custom_theme.default_font_size = 30
+	
+	# Apply theme to the dialog
+	final_popup.theme = custom_theme
+
+	# Make button bigger
+	var ok_button = final_popup.get_ok_button()
+	ok_button.add_theme_font_size_override("font_size", 24)  # Larger button text
+	ok_button.custom_minimum_size = Vector2(120, 60)  # Bigger button size
+
+	# Optional: Add some margin to text for better spacing
+	var text_label = final_popup.get_label()
+	text_label.add_theme_constant_override("margin_left", 40) 
+	text_label.add_theme_constant_override("margin_top", 40) 
+	text_label.add_theme_constant_override("margin_right", 40)
+	text_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	
 	add_child(final_popup)
 	final_popup.confirmed.connect(on_play_again)
 	final_popup.popup_centered()	

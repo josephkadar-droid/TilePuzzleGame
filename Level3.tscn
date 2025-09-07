@@ -1,73 +1,136 @@
-[gd_scene load_steps=11 format=3 uid="uid://208x10oet7cu"]
+[gd_scene load_steps=20 format=3 uid="uid://208x10oet7cu"]
 
 [ext_resource type="Script" uid="uid://ckgvx084awkot" path="res://Level3.gd" id="1_qlmxs"]
 [ext_resource type="Script" uid="uid://bjius2py8qiex" path="res://Shelf.gd" id="2_ywoe1"]
 [ext_resource type="Script" uid="uid://qh7v7epv0emi" path="res://InanimateObject.gd" id="3_akpwm"]
 [ext_resource type="Texture2D" uid="uid://cqufn4fi78f8l" path="res://bookstack.png" id="4_1ubim"]
 [ext_resource type="Script" uid="uid://byarea8hlfbhs" path="res://PlacementSpot.gd" id="5_eud56"]
+[ext_resource type="Texture2D" uid="uid://brjgx45fooo0u" path="res://assets/background.png" id="5_otr1s"]
 [ext_resource type="Script" uid="uid://c04dcrh5437mw" path="res://Homelab.gd" id="6_545p4"]
+[ext_resource type="Texture2D" uid="uid://dpobkmbkhn2l5" path="res://assets/inventory-layer.png" id="6_bptnd"]
 [ext_resource type="Texture2D" uid="uid://c3ghkwy4etpoi" path="res://assets/razorlaptop.png" id="7_nqeel"]
 [ext_resource type="Texture2D" uid="uid://s3v2c375tvpw" path="res://assets/laptop_broken.png" id="8_u5lf4"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_psxy2"]
-size = Vector2(192, 64)
+[ext_resource type="Texture2D" uid="uid://du2bsom47iapk" path="res://assets/shelf.png" id="9_gp5y5"]
+[ext_resource type="Texture2D" uid="uid://ddw3jomkgul8y" path="res://assets/placeholder.png" id="10_kah4x"]
+[ext_resource type="Script" uid="uid://d2x0qcbou6di8" path="res://DraggableItem.gd" id="11_8jspn"]
+[ext_resource type="Texture2D" uid="uid://t20k7qhdgclv" path="res://assets/flower1.png" id="12_80vsr"]
+[ext_resource type="Texture2D" uid="uid://diar87ppa4yt8" path="res://assets/window2.png" id="13_kyqi5"]
+[ext_resource type="Texture2D" uid="uid://bwws1dfiq5656" path="res://assets/plantgrow.png" id="15_kah4x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h8oof"]
-size = Vector2(188.837, 175.875)
+size = Vector2(353, 324.875)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vje1a"]
+size = Vector2(594, 176)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qb3ey"]
+size = Vector2(126, 155)
 
 [node name="Level3" type="Node2D"]
 script = ExtResource("1_qlmxs")
 
+[node name="RazorLaptop" type="Area2D" parent="."]
+z_index = 1
+position = Vector2(658, 913)
+script = ExtResource("6_545p4")
+metadata/_custom_type_script = "uid://c04dcrh5437mw"
+metadata/_edit_group_ = true
+
+[node name="MainSprite" type="Sprite2D" parent="RazorLaptop"]
+position = Vector2(-65.4491, -90.3126)
+scale = Vector2(0.386489, 0.386489)
+texture = ExtResource("7_nqeel")
+
+[node name="BrokenSprite" type="Sprite2D" parent="RazorLaptop"]
+visible = false
+position = Vector2(-68.197, -91.125)
+scale = Vector2(0.395299, 0.395299)
+texture = ExtResource("8_u5lf4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RazorLaptop"]
+position = Vector2(-69.5, -92.5625)
+shape = SubResource("RectangleShape2D_h8oof")
+
+[node name="Background" type="Sprite2D" parent="."]
+z_as_relative = false
+position = Vector2(960, 541)
+texture = ExtResource("5_otr1s")
+
+[node name="InventoryBox" type="Sprite2D" parent="."]
+position = Vector2(956, 537)
+texture = ExtResource("6_bptnd")
+
 [node name="Shelf" type="Area2D" parent="."]
 script = ExtResource("2_ywoe1")
 position_effects = {
-1: "sun"
+3: "sun"
 }
-
-[node name="ColorRect" type="ColorRect" parent="Shelf"]
-modulate = Color(0.583002, 0.358384, 0.189896, 1)
-offset_left = 640.0
-offset_top = 640.0
-offset_right = 832.0
-offset_bottom = 704.0
-
-[node name="PlacementSpot2" type="Area2D" parent="Shelf"]
-position = Vector2(667, 576)
-script = ExtResource("5_eud56")
-
-[node name="PlacementSpot3" type="Area2D" parent="Shelf"]
-position = Vector2(731, 576)
-script = ExtResource("5_eud56")
 
 [node name="BookStack" type="Area2D" parent="Shelf"]
 script = ExtResource("3_akpwm")
 metadata/_custom_type_script = "uid://qh7v7epv0emi"
 
 [node name="Sprite2D" type="Sprite2D" parent="Shelf/BookStack"]
-position = Vector2(803, 576)
-scale = Vector2(0.0712162, 0.0627551)
+z_index = 1
+position = Vector2(400, 365)
+scale = Vector2(0.206453, 0.181924)
 texture = ExtResource("4_1ubim")
 
+[node name="PlacementSpot2" type="Area2D" parent="Shelf"]
+position = Vector2(550, 329)
+script = ExtResource("5_eud56")
+
+[node name="PlacementSpot3" type="Area2D" parent="Shelf"]
+position = Vector2(743, 328)
+script = ExtResource("5_eud56")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shelf"]
-position = Vector2(736, 672)
-shape = SubResource("RectangleShape2D_psxy2")
+position = Vector2(593, 491)
+shape = SubResource("RectangleShape2D_vje1a")
 debug_color = Color(0.0431373, 0.596078, 0.721569, 0.278431)
 
-[node name="RazorLaptop" type="Area2D" parent="."]
-position = Vector2(734, 850)
-script = ExtResource("6_545p4")
-metadata/_custom_type_script = "uid://c04dcrh5437mw"
+[node name="Sprite2D" type="Sprite2D" parent="Shelf"]
+position = Vector2(586, 477)
+scale = Vector2(0.696289, 0.696289)
+texture = ExtResource("9_gp5y5")
 
-[node name="MainSprite" type="Sprite2D" parent="RazorLaptop"]
-position = Vector2(13.7863, -18.3125)
-scale = Vector2(0.210018, 0.210018)
-texture = ExtResource("7_nqeel")
+[node name="Plc1" type="Sprite2D" parent="Shelf"]
+position = Vector2(400, 444)
+texture = ExtResource("10_kah4x")
 
-[node name="BrokenSprite" type="Sprite2D" parent="RazorLaptop"]
-position = Vector2(12.6638, -16.125)
-scale = Vector2(0.212149, 0.212149)
-texture = ExtResource("8_u5lf4")
+[node name="Plc2" type="Sprite2D" parent="Shelf"]
+position = Vector2(592, 442)
+texture = ExtResource("10_kah4x")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RazorLaptop"]
-position = Vector2(12.5815, -18.0625)
-shape = SubResource("RectangleShape2D_h8oof")
+[node name="Plc3" type="Sprite2D" parent="Shelf"]
+position = Vector2(782, 442)
+texture = ExtResource("10_kah4x")
+
+[node name="Flower1" type="Area2D" parent="Shelf"]
+z_index = 3
+position = Vector2(1211, 934)
+script = ExtResource("11_8jspn")
+item_color = Color(1, 1, 0, 0)
+metadata/_custom_type_script = "uid://d2x0qcbou6di8"
+
+[node name="MainSprite" type="Sprite2D" parent="Shelf/Flower1"]
+z_index = 3
+position = Vector2(39.5, 40.5)
+scale = Vector2(0.161133, 0.161133)
+texture = ExtResource("12_80vsr")
+
+[node name="GrowthSprite" type="Sprite2D" parent="Shelf/Flower1"]
+visible = false
+z_index = 3
+position = Vector2(40, -5.40623)
+scale = Vector2(0.148682, 0.175252)
+texture = ExtResource("15_kah4x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shelf/Flower1"]
+position = Vector2(44, 44.5)
+shape = SubResource("RectangleShape2D_qb3ey")
+
+[node name="Window" type="Sprite2D" parent="."]
+position = Vector2(905, 247)
+scale = Vector2(0.48877, 0.399414)
+texture = ExtResource("13_kyqi5")
