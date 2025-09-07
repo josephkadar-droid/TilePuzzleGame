@@ -1,7 +1,7 @@
 extends Control
 class_name GameManager
 
-@export var current_level: int = 3
+@export var current_level: int = 4
 @export var level_scenes: Array[PackedScene] = []
 
 @onready var level_container = $LevelContainer
@@ -62,7 +62,7 @@ func _on_level_completed():
 		#load_level(current_level)
 	#else:
 		#print("All levels completed!")
-		
+
 func create_completion_popup():
 	completion_popup = AcceptDialog.new()
 	completion_popup.title = "Level Complete!"
@@ -102,6 +102,9 @@ func on_next_level_pressed():  # <-- Function definition here
 	if current_level <= level_scenes.size():
 		load_level(current_level)
 	else:
+		var endscene = get_node("EndScene")
+		endscene.visible = true
+		await get_tree().create_timer(5).timeout
 		show_game_complete_popup()
 
 func show_game_complete_popup():  # <-- Function definition here

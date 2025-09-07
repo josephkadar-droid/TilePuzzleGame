@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://kbt7k4quqfs3"]
+[gd_scene load_steps=20 format=3 uid="uid://kbt7k4quqfs3"]
 
 [ext_resource type="Script" uid="uid://duint7ewm87cm" path="res://Level2.gd" id="1_8mrap"]
 [ext_resource type="Script" uid="uid://bjius2py8qiex" path="res://Shelf.gd" id="2_s8dg4"]
@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://ddw3jomkgul8y" path="res://assets/placeholder.png" id="12_0xt02"]
 [ext_resource type="Script" uid="uid://d2x0qcbou6di8" path="res://DraggableItem.gd" id="13_q0xi3"]
 [ext_resource type="Texture2D" uid="uid://t20k7qhdgclv" path="res://assets/flower1.png" id="14_nwnlh"]
+[ext_resource type="Texture2D" uid="uid://dmas34vthjdiy" path="res://assets/homelab_prescene.png" id="15_jw1dd"]
+[ext_resource type="Script" uid="uid://bkn0tea5qddw3" path="res://Prescene.gd" id="16_0xt02"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_6x3wt"]
 size = Vector2(1.06873, 0.661951)
@@ -141,3 +143,10 @@ shape = SubResource("RectangleShape2D_0rx21")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(329, 376.25)
 scale = Vector2(1.22656, 153.5)
+
+[node name="Prescene" type="Sprite2D" parent="."]
+z_index = 5
+position = Vector2(963.5, 537)
+scale = Vector2(1.87793, 1.05273)
+texture = ExtResource("15_jw1dd")
+script = ExtResource("16_0xt02")

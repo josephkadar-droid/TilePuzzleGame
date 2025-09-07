@@ -12,6 +12,9 @@ var current_placement_spot: PlacementSpot = null
 var sprite: Sprite2D
 var snap_distance: float = 100.0
 
+@export var heat_resistant: bool = false
+@export var weight: int = 1
+
 var effect_sprite: Sprite2D
 
 func _ready():
@@ -61,14 +64,14 @@ func start_drag():
 	is_being_dragged = true
 	z_index = 100
 	var tween = create_tween()
-	tween.tween_property(sprite, "scale", Vector2(1.1, 1.1), 0.1)
+	tween.tween_property(sprite, "scale", Vector2(0.170, 0.170), 0.1)
 
 func end_drag():
 	print("=== END_DRAG CALLED ===")
 	is_being_dragged = false
 	z_index = 0
 	var tween = create_tween()
-	tween.tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.1)
+	tween.tween_property(sprite, "scale", Vector2(0.170, 0.170), 0.1)
 	
 	print("Item position when dropped: ", global_position)
 	
@@ -135,8 +138,32 @@ func grow_plant():
 	
 	sprite.visible = false
 	effect_sprite.visible = true
+	
+func shrivel_plant():
+	sprite = get_child(0)
+	var second_child = get_child(1)
+	
+	await get_tree().create_timer(0.2).timeout
+	
+	sprite.visible = false
+	if second_child is Sprite2D:
+		effect_sprite = second_child
+		effect_sprite.visible = true
+	
+func reset_item():
+	sprite = get_child(0)
+	var second_child = get_child(1)
+	
+	weight = 1
+	sprite.visible = true
+	if second_child is Sprite2D:
+		effect_sprite = second_child
+		effect_sprite.visible = false
+	
+	return_to_inventory = true
 
 func return_to_original_position():
 	var tween = create_tween()
 	tween.tween_property(self, "position", original_position, 0.3)
-	tween.tween_callback(func(): return_to_inventory = true)
+	tween.tween_callback(func(): reset_item())
+	

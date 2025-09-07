@@ -72,6 +72,8 @@ func _on_item_placed():
 	for spot in placement_spots:
 		if spot.is_placed:
 			if spot is PlacementSpot:
+				spot.weight = 1
+				has_effects = false
 				apply_special_effect(spot)
 			filled_spots += 1
 			weight += spot.weight
@@ -99,8 +101,10 @@ func apply_special_effect(spot: PlacementSpot):
 				#await get_tree().create_timer(0.2).timeout
 				spot.weight = 2
 			"fire":
-				has_effects = true
-				spot.weight = 0
+				if not spot.filled_item.heat_resistant:
+					spot.filled_item.shrivel_plant()
+					has_effects = true
+					spot.weight = 0
 
 # COMPLETION VALIDATOR - checks if all placement spots are filled
 func is_satisfied() -> bool:

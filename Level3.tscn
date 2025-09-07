@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://208x10oet7cu"]
+[gd_scene load_steps=22 format=3 uid="uid://208x10oet7cu"]
 
 [ext_resource type="Script" uid="uid://ckgvx084awkot" path="res://Level3.gd" id="1_qlmxs"]
 [ext_resource type="Script" uid="uid://bjius2py8qiex" path="res://Shelf.gd" id="2_ywoe1"]
@@ -16,6 +16,8 @@
 [ext_resource type="Texture2D" uid="uid://t20k7qhdgclv" path="res://assets/flower1.png" id="12_80vsr"]
 [ext_resource type="Texture2D" uid="uid://diar87ppa4yt8" path="res://assets/window2.png" id="13_kyqi5"]
 [ext_resource type="Texture2D" uid="uid://bwws1dfiq5656" path="res://assets/plantgrow.png" id="15_kah4x"]
+[ext_resource type="Texture2D" uid="uid://pa4spwg1rxp5" path="res://assets/laptop_prescene.png" id="17_80vsr"]
+[ext_resource type="Script" uid="uid://bkn0tea5qddw3" path="res://Prescene.gd" id="18_kyqi5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h8oof"]
 size = Vector2(353, 324.875)
@@ -126,6 +128,13 @@ position = Vector2(40, -5.40623)
 scale = Vector2(0.148682, 0.175252)
 texture = ExtResource("15_kah4x")
 
+[node name="GrowthSprite" type="Sprite2D" parent="Shelf/Flower1/GrowthSprite"]
+visible = false
+z_index = 3
+position = Vector2(40, -5.40623)
+scale = Vector2(0.148682, 0.175252)
+texture = ExtResource("15_kah4x")
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shelf/Flower1"]
 position = Vector2(44, 44.5)
 shape = SubResource("RectangleShape2D_qb3ey")
@@ -134,3 +143,10 @@ shape = SubResource("RectangleShape2D_qb3ey")
 position = Vector2(905, 247)
 scale = Vector2(0.48877, 0.399414)
 texture = ExtResource("13_kyqi5")
+
+[node name="Prescene" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(963.5, 537)
+scale = Vector2(1.87793, 1.05273)
+texture = ExtResource("17_80vsr")
+script = ExtResource("18_kyqi5")
