@@ -156,6 +156,7 @@ func show_game_complete_popup():  # <-- Function definition here
 
 func on_play_again():
 	current_level = 1
+	var endscene = get_node("EndScene")
 	endscene.visible = false
 	load_level(current_level)
 
