@@ -1,12 +1,16 @@
 extends Control
 class_name GameManager
 
-@export var current_level: int = 4
+@export var current_level: int = 1
 @export var level_scenes: Array[PackedScene] = []
+@export var background_music: AudioStream
+@export var crash_sound: AudioStream
 
 @onready var level_container = $LevelContainer
 @onready var ui_container = $UIContainer
 @onready var inventory = $UIContainer/Inventory
+@onready var music_player = $MusicPlayer
+@onready var effect_player = $EffectPlayer
 
 var current_level_node: Level
 var completion_popup: AcceptDialog
@@ -17,6 +21,8 @@ func _ready():
 	print("UI container: ", ui_container)
 	print("Inventory: ", inventory)
 	load_level(current_level)
+	music_player.stream = background_music
+	music_player.play()
 
 func load_level(level_num: int):
 	print("=== LOADING LEVEL ===")
@@ -56,6 +62,9 @@ func create_tomfoolery_area(fuckable_items: Array[FuckableItem]):
 func _on_level_completed():
 	print("Level ", current_level, " completed!")
 	completion_popup.popup_centered()
+	effect_player.stream = crash_sound
+	effect_player.volume_db = 40
+	effect_player.play()
 	#current_level += 1
 	#if current_level <= level_scenes.size():
 		#await get_tree().create_timer(1.0).timeout  # Brief pause

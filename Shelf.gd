@@ -124,6 +124,13 @@ func trigger_completion_effect():
 func fall_animation():
 	print("=== SHELF STARTING TO FALL ===")
 	
+	var crash_player = AudioStreamPlayer2D.new()
+	var sound = load("res://assets/crash.mp3")
+	crash_player.stream = sound
+	crash_player.volume_db = 5
+	add_child(crash_player)
+	crash_player.play()
+	
 	# TV INTERACTION - find and break the TV when shelf falls
 	var level = get_parent()  # Get parent level node (like transform.parent in Unity)
 	var tv_node = level.get_node_or_null("TV")  # Search for TV node by name
