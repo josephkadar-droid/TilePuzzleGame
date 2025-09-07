@@ -141,7 +141,7 @@ func fuck_item():
 	var original_pos = position
 	shake_tween.tween_method(shake_item, 0.0, 1.0, 0.5)
 	shake_tween.tween_callback(func(): position = original_pos)
-
+ 
 # SHAKE EFFECT - creates impact animation
 func shake_item(progress: float):
 	var shake_intensity = 5.0 * (1.0 - progress)  # Decreases over time

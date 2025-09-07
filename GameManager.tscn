@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://da2b1tc06oduy"]
+[gd_scene load_steps=6 format=3 uid="uid://da2b1tc06oduy"]
 
 [ext_resource type="Script" uid="uid://dvxw6vme2xpd2" path="res://GameManager.gd" id="1_p13vs"]
 [ext_resource type="PackedScene" uid="uid://cb5ainjtcd1aa" path="res://Level1.tscn" id="2_108xg"]
 [ext_resource type="Script" uid="uid://rt0no1ompx7a" path="res://Inventory.gd" id="2_aelf4"]
 [ext_resource type="PackedScene" uid="uid://kbt7k4quqfs3" path="res://Level2.tscn" id="3_dxunw"]
+[ext_resource type="PackedScene" uid="uid://208x10oet7cu" path="res://Level3.tscn" id="4_dxunw"]
 
 [node name="GameManager" type="Control"]
 layout_mode = 3
@@ -13,7 +14,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p13vs")
-level_scenes = Array[PackedScene]([ExtResource("2_108xg"), ExtResource("3_dxunw")])
+level_scenes = Array[PackedScene]([ExtResource("2_108xg"), ExtResource("3_dxunw"), ExtResource("4_dxunw")])
 metadata/_edit_use_anchors_ = true
 
 [node name="LevelContainer" type="Control" parent="."]

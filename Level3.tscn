@@ -1,0 +1,45 @@
+[gd_scene load_steps=7 format=3 uid="uid://208x10oet7cu"]
+
+[ext_resource type="Script" uid="uid://ckgvx084awkot" path="res://Level3.gd" id="1_qlmxs"]
+[ext_resource type="Script" uid="uid://bjius2py8qiex" path="res://Shelf.gd" id="2_ywoe1"]
+[ext_resource type="Script" uid="uid://qh7v7epv0emi" path="res://InanimateObject.gd" id="3_akpwm"]
+[ext_resource type="Texture2D" uid="uid://cqufn4fi78f8l" path="res://bookstack.png" id="4_1ubim"]
+[ext_resource type="Script" uid="uid://byarea8hlfbhs" path="res://PlacementSpot.gd" id="5_eud56"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_psxy2"]
+size = Vector2(192, 64)
+
+[node name="Level3" type="Node2D"]
+script = ExtResource("1_qlmxs")
+
+[node name="Shelf" type="Area2D" parent="."]
+script = ExtResource("2_ywoe1")
+
+[node name="ColorRect" type="ColorRect" parent="Shelf"]
+modulate = Color(0.583002, 0.358384, 0.189896, 1)
+offset_left = 640.0
+offset_top = 640.0
+offset_right = 832.0
+offset_bottom = 704.0
+
+[node name="BookStack" type="Area2D" parent="Shelf"]
+script = ExtResource("3_akpwm")
+metadata/_custom_type_script = "uid://qh7v7epv0emi"
+
+[node name="Sprite2D" type="Sprite2D" parent="Shelf/BookStack"]
+position = Vector2(739, 500)
+scale = Vector2(0.0712162, 0.0627551)
+texture = ExtResource("4_1ubim")
+
+[node name="PlacementSpot2" type="Area2D" parent="Shelf"]
+position = Vector2(734, 576)
+script = ExtResource("5_eud56")
+
+[node name="PlacementSpot3" type="Area2D" parent="Shelf"]
+position = Vector2(798, 576)
+script = ExtResource("5_eud56")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Shelf"]
+position = Vector2(736, 672)
+shape = SubResource("RectangleShape2D_psxy2")
+debug_color = Color(0.0431373, 0.596078, 0.721569, 0.278431)
