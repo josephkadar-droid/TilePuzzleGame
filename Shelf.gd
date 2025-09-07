@@ -74,6 +74,7 @@ func _on_item_placed():
 			if spot is PlacementSpot:
 				spot.weight = 1
 				has_effects = false
+				spot.filled_item.reset_item()
 				apply_special_effect(spot)
 			filled_spots += 1
 			weight += spot.weight
