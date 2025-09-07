@@ -8,6 +8,8 @@ signal level_completed
 @export var grid_height: int = 17
 @export var show_debug_grid: bool = false
 
+var completion_msg: String = ""
+
 var grid_data: Array = []
 #var placeable_objects: Array[Shelf] = []
 var shelf: Shelf = null

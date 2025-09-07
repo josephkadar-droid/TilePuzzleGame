@@ -95,3 +95,4 @@ func remove_item():
 	if filled_item:
 		print("Removing item from PlacementSpot")
 		filled_item = null
+		is_placed = false

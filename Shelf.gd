@@ -44,18 +44,20 @@ func FuckTheItems():
 func find_placement_spots_recursive(node: Node):
 	# TYPE CHECK - if this node is a PlacementSpot, add it to our list
 	var pos_count = 1
-	if node is ShelfSpot:
-		print("Found ShelfSpot: ", node.name)
-		placement_spots.append(node)  # Add to our array (like List.Add() in C#)
-		node.parent_object = self  # Set back-reference so spot knows its parent
-		# EVENT SUBSCRIPTION - listen for item placement events (like += in C#)
-		node.item_placed.connect(_on_item_placed)
-		node.spot_position = pos_count
-		pos_count += 1
+	for child in node.get_children():
+		if child is ShelfSpot:
+			print("Found ShelfSpot: ", child.name)
+			placement_spots.append(child)  # Add to our array (like List.Add() in C#)
+			child.parent_object = self  # Set back-reference so spot knows its parent
+			# EVENT SUBSCRIPTION - listen for item placement events (like += in C#)
+			child.item_placed.connect(_on_item_placed)
+			child.spot_position = pos_count
+			print("pos", pos_count)
+			pos_count += 1
 	
 	# RECURSION - check all children of this node
-	for child in node.get_children():
-		find_placement_spots_recursive(child)
+	#for child in node.get_children():
+		#find_placement_spots_recursive(child)
 
 # EVENT HANDLER - called whenever an item is placed on any of our spots
 func _on_item_placed():
@@ -88,6 +90,7 @@ func apply_special_effect(spot: ShelfSpot):
 		print("effect match")
 		match position_effects[spot.spot_position]:
 			"sun":
+				print("sun effect: ", spot.spot_position)
 				spot.weight = 2
 			"fire":
 				spot.weight = 0

@@ -17,7 +17,6 @@ func _ready():
 	print("UI container: ", ui_container)
 	print("Inventory: ", inventory)
 	load_level(current_level)
-	create_completion_popup()
 
 func load_level(level_num: int):
 	print("=== LOADING LEVEL ===")
@@ -29,6 +28,7 @@ func load_level(level_num: int):
 		current_level_node.queue_free()
 	
 	# Load new level
+	print("scenes: ",level_scenes)
 	if level_num <= level_scenes.size() and level_scenes[level_num - 1]:
 		print("Loading level scene: ", level_scenes[level_num - 1])
 		current_level_node = level_scenes[level_num - 1].instantiate()
@@ -41,11 +41,12 @@ func load_level(level_num: int):
 		
 		# Setup inventory for this level
 		print("Setting up inventory...")
-		inventory.setup_for_level(level_num, required_items)
+		inventory.setup_for_level(required_items)
 		print("Inventory setup complete")
 	else:
 		print("ERROR: Could not load level ", level_num)
 		
+	create_completion_popup()
 	create_tomfoolery_area(current_level_node.get_fuckable_items())
 
 func create_tomfoolery_area(fuckable_items: Array[FuckableItem]):
@@ -69,7 +70,7 @@ func _on_level_completed():
 func create_completion_popup():
 	completion_popup = AcceptDialog.new()
 	completion_popup.title = "Level Complete!"
-	completion_popup.dialog_text = "TV DESTROYED!\nLevel Complete!"  # <-- HERE
+	completion_popup.dialog_text = current_level_node.completion_msg  # <-- HERE
 	completion_popup.get_ok_button().text = "Next Level"
 	add_child(completion_popup)
 	completion_popup.confirmed.connect(on_next_level_pressed)

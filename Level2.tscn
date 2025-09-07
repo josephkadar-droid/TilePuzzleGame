@@ -1,13 +1,19 @@
-[gd_scene load_steps=7 format=3 uid="uid://kbt7k4quqfs3"]
+[gd_scene load_steps=11 format=3 uid="uid://kbt7k4quqfs3"]
 
 [ext_resource type="Script" uid="uid://duint7ewm87cm" path="res://Level2.gd" id="1_8mrap"]
 [ext_resource type="Script" uid="uid://bjius2py8qiex" path="res://Shelf.gd" id="2_s8dg4"]
 [ext_resource type="Script" uid="uid://byarea8hlfbhs" path="res://PlacementSpot.gd" id="3_ex07k"]
 [ext_resource type="Script" uid="uid://qh7v7epv0emi" path="res://InanimateObject.gd" id="3_psxy2"]
 [ext_resource type="Texture2D" uid="uid://cqufn4fi78f8l" path="res://bookstack.png" id="4_wwdpc"]
+[ext_resource type="Script" uid="uid://c04dcrh5437mw" path="res://Homelab.gd" id="6_6faey"]
+[ext_resource type="Texture2D" uid="uid://tn8xnfq1amla" path="res://assets/homelab.png" id="7_nc7oo"]
+[ext_resource type="Texture2D" uid="uid://28ht2f4s6ru" path="res://assets/homelab_broken.png" id="8_nc7oo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_psxy2"]
 size = Vector2(192, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6x3wt"]
+size = Vector2(0.467463, 0.288901)
 
 [node name="Level2" type="Node2D"]
 script = ExtResource("1_8mrap")
@@ -43,3 +49,25 @@ script = ExtResource("3_ex07k")
 position = Vector2(736, 672)
 shape = SubResource("RectangleShape2D_psxy2")
 debug_color = Color(0.0431373, 0.596078, 0.721569, 0.278431)
+
+[node name="Homelab" type="Area2D" parent="."]
+position = Vector2(732, 880)
+script = ExtResource("6_6faey")
+metadata/_custom_type_script = "uid://c04dcrh5437mw"
+metadata/_edit_group_ = true
+
+[node name="MainSprite" type="Sprite2D" parent="Homelab"]
+position = Vector2(0.999939, 1.52588e-05)
+scale = Vector2(0.193412, 0.193412)
+texture = ExtResource("7_nc7oo")
+
+[node name="BrokenSprite" type="Sprite2D" parent="Homelab"]
+visible = false
+position = Vector2(0.540062, 6.25002)
+scale = Vector2(0.196154, 0.196154)
+texture = ExtResource("8_nc7oo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Homelab"]
+scale = Vector2(400, 400)
+shape = SubResource("RectangleShape2D_6x3wt")
+debug_color = Color(0.873197, 0.251368, 0.6065, 0.42)

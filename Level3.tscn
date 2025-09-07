@@ -1,19 +1,28 @@
-[gd_scene load_steps=7 format=3 uid="uid://208x10oet7cu"]
+[gd_scene load_steps=11 format=3 uid="uid://208x10oet7cu"]
 
 [ext_resource type="Script" uid="uid://ckgvx084awkot" path="res://Level3.gd" id="1_qlmxs"]
 [ext_resource type="Script" uid="uid://bjius2py8qiex" path="res://Shelf.gd" id="2_ywoe1"]
 [ext_resource type="Script" uid="uid://qh7v7epv0emi" path="res://InanimateObject.gd" id="3_akpwm"]
 [ext_resource type="Texture2D" uid="uid://cqufn4fi78f8l" path="res://bookstack.png" id="4_1ubim"]
 [ext_resource type="Script" uid="uid://byarea8hlfbhs" path="res://PlacementSpot.gd" id="5_eud56"]
+[ext_resource type="Script" uid="uid://c04dcrh5437mw" path="res://Homelab.gd" id="6_545p4"]
+[ext_resource type="Texture2D" uid="uid://c3ghkwy4etpoi" path="res://assets/razorlaptop.png" id="7_nqeel"]
+[ext_resource type="Texture2D" uid="uid://s3v2c375tvpw" path="res://assets/laptop_broken.png" id="8_u5lf4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_psxy2"]
 size = Vector2(192, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h8oof"]
+size = Vector2(188.837, 175.875)
 
 [node name="Level3" type="Node2D"]
 script = ExtResource("1_qlmxs")
 
 [node name="Shelf" type="Area2D" parent="."]
 script = ExtResource("2_ywoe1")
+position_effects = {
+1: "sun"
+}
 
 [node name="ColorRect" type="ColorRect" parent="Shelf"]
 modulate = Color(0.583002, 0.358384, 0.189896, 1)
@@ -22,24 +31,43 @@ offset_top = 640.0
 offset_right = 832.0
 offset_bottom = 704.0
 
+[node name="PlacementSpot2" type="Area2D" parent="Shelf"]
+position = Vector2(667, 576)
+script = ExtResource("5_eud56")
+
+[node name="PlacementSpot3" type="Area2D" parent="Shelf"]
+position = Vector2(731, 576)
+script = ExtResource("5_eud56")
+
 [node name="BookStack" type="Area2D" parent="Shelf"]
 script = ExtResource("3_akpwm")
 metadata/_custom_type_script = "uid://qh7v7epv0emi"
 
 [node name="Sprite2D" type="Sprite2D" parent="Shelf/BookStack"]
-position = Vector2(739, 500)
+position = Vector2(803, 576)
 scale = Vector2(0.0712162, 0.0627551)
 texture = ExtResource("4_1ubim")
-
-[node name="PlacementSpot2" type="Area2D" parent="Shelf"]
-position = Vector2(734, 576)
-script = ExtResource("5_eud56")
-
-[node name="PlacementSpot3" type="Area2D" parent="Shelf"]
-position = Vector2(798, 576)
-script = ExtResource("5_eud56")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Shelf"]
 position = Vector2(736, 672)
 shape = SubResource("RectangleShape2D_psxy2")
 debug_color = Color(0.0431373, 0.596078, 0.721569, 0.278431)
+
+[node name="RazorLaptop" type="Area2D" parent="."]
+position = Vector2(734, 850)
+script = ExtResource("6_545p4")
+metadata/_custom_type_script = "uid://c04dcrh5437mw"
+
+[node name="MainSprite" type="Sprite2D" parent="RazorLaptop"]
+position = Vector2(13.7863, -18.3125)
+scale = Vector2(0.210018, 0.210018)
+texture = ExtResource("7_nqeel")
+
+[node name="BrokenSprite" type="Sprite2D" parent="RazorLaptop"]
+position = Vector2(12.6638, -16.125)
+scale = Vector2(0.212149, 0.212149)
+texture = ExtResource("8_u5lf4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RazorLaptop"]
+position = Vector2(12.5815, -18.0625)
+shape = SubResource("RectangleShape2D_h8oof")
