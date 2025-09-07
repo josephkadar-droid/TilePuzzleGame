@@ -19,6 +19,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_p13vs")
+current_level = null
 level_scenes = Array[PackedScene]([ExtResource("2_108xg"), ExtResource("3_dxunw"), ExtResource("4_dxunw"), ExtResource("5_pdxvr")])
 background_music = ExtResource("6_k24m2")
 crash_sound = ExtResource("7_0145d")
